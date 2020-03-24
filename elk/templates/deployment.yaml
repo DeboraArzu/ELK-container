@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "elk.fullname" . }}
+  labels:
+    app: {{ include "elk.fullname" . }}
+    chart: {{ include "elk.fullname" . }}
+
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "elk.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "elk.fullname" . }}
+    
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 9200
+              protocol: TCP
+        # - name: kibana
+        #   image: "{{ .Values.kibana.repository }}:{{ .Values.kibana.tag }}"
+        #   imagePullPolicy: {{ .Values.kibana.pullPolicy }}
+        #   ports:
+        #     - name: http
+        #       containerPort: 5601
+        #       protocol: TCP
+        # - name: logstash
+        #   image: "{{ .Values.logstash.repository }}:{{ .Values.logstash.tag }}"
+        #   imagePullPolicy: {{ .Values.logstash.pullPolicy }}
+        #   ports:
+        #     - name: http
+        #       containerPort: 9600
+        #       protocol: TCP
+      
