@@ -67,6 +67,18 @@ services:
       - elk
     depends_on:
       - elasticsearch
+  filebeat:
+    build: 
+      context: filebeat/
+    volumes: 
+      - type: bind
+        source: ./filebeat/config/filebeat.yml
+        target: /etc/filebeat/filebeat.yml
+        read_only: true
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
 
 networks:
   elk:
