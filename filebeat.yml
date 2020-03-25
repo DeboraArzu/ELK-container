@@ -4,6 +4,20 @@ filebeat.inputs:
   enabled: true
   paths:
     - /var/log/*.log
+- type: docker
+  combine_partial: true
+  containers:
+    path: "/var/lib/docker/containers"
+    stream: "stdout"
+    ids:
+      - "*"
+- type: docker
+  combine_partial: true
+  containers:
+    path: "/var/lib/docker/containers"
+    stream: "stderr"
+    ids:
+      - "*"
 #============================= Filebeat modules ===============================
 
 filebeat.config.modules:
