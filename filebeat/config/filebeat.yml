@@ -40,7 +40,7 @@ setup.template.settings:
 
 # ============================== Kibana =====================================
 setup.kibana:
-  host: "http://advinow-nlb-advinow-dev-nlb-f8f4f02ed41afc7b.elb.us-west-2.amazonaws.com:5601/app/kibana"
+  host: "http://advinow-nlb-advinow-dev-nlb-f8f4f02ed41afc7b.elb.us-west-2.amazonaws.com:5601"
 
 #================================ Outputs =====================================  
 output.elasticsearch:
