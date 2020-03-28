@@ -40,11 +40,11 @@ setup.template.settings:
 
 # ============================== Kibana =====================================
 setup.kibana:
-  host: "http://localhost:5601"
+  host: "http://advinow-nlb-advinow-dev-nlb-f8f4f02ed41afc7b.elb.us-west-2.amazonaws.com:5601/app/kibana"
 
 #================================ Outputs =====================================  
 output.elasticsearch:
-    hosts: ["localhost:9200"]
+    hosts: ["http://advinow-nlb-advinow-dev-nlb-f8f4f02ed41afc7b.elb.us-west-2.amazonaws.com:9200"]
 
 # output.console:
 #   pretty: true
