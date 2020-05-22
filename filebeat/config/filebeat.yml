@@ -1,52 +1,42 @@
 #=========================== Filebeat inputs =============================
 filebeat.inputs:
-- type: log
-  enabled: true
-  paths:
-    - /var/log/*.log
-- type: docker
-  combine_partial: true
-  containers:
-    path: "/var/lib/docker/containers"
-    stream: "stdout"
-    ids:
-      - "*"
-- type: docker
-  combine_partial: true
-  containers:
-    path: "/var/lib/docker/containers"
-    stream: "stderr"
-    ids:
-      - "*"
-#============================= Filebeat modules ===============================
+  - type: log
+    enabled: true
+    paths:
+      - /var/log/containers/*.log
 
-filebeat.config.modules:
-  # Glob pattern for configuration loading
-  path: /etc/filebeat/modules.d/*.yml
-
-  # Set to true to enable config reloading
-  reload.enabled: false
-
-  # Period on which files under path should be checked for changes
-  #reload.period: 10s
-
-#============================== Dashboards =====================================
-setup.dashboards.enabled: true
-# setup.dashboards.kibana_index: "test"
-#==================== Elasticsearch template setting ==========================
-
-setup.template.settings:
-  index.number_of_shards: 1
-
-# ============================== Kibana =====================================
-setup.kibana:
-  host: "http://advinow-nlb-advinow-dev-nlb-f8f4f02ed41afc7b.elb.us-west-2.amazonaws.com:5601"
-
-#================================ Outputs =====================================  
-output.elasticsearch:
-    hosts: ["http://advinow-nlb-advinow-dev-nlb-f8f4f02ed41afc7b.elb.us-west-2.amazonaws.com:9200"]
-
-# output.console:
-#   pretty: true
-
-setup.ilm.enabled: false
+    processors:
+      - add_kubernetes_metadata:
+          host: ${NODE_NAME}
+          matchers:
+          - logs_path:
+              logs_path: "/var/log/containers/"
+  #============================= Filebeat modules ===============================
+  
+  filebeat.config.modules:
+    # Glob pattern for configuration loading
+    path: /etc/filebeat/modules.d/*.yml
+  
+    # Set to true to enable config reloading
+    reload.enabled: false
+  
+    # Period on which files under path should be checked for changes
+    #reload.period: 10s
+  
+  #============================== Dashboards =====================================
+  setup.dashboards.enabled: false
+  # setup.dashboards.kibana_index: "test"
+  #==================== Elasticsearch template setting ==========================
+  
+  setup.template.settings:
+    index.number_of_shards: 1
+  
+  # ============================== Kibana =====================================
+  setup.kibana:
+    host: "ADVINOW-DEV-NLB-265dc48c170e7cff.elb.us-west-2.amazonaws.com:5601"
+  
+  #================================ Outputs =====================================
+  output.elasticsearch:
+      hosts: ["ADVINOW-DEV-NLB-265dc48c170e7cff.elb.us-west-2.amazonaws.com:9200"]
+  
+  setup.ilm.enabled: false
